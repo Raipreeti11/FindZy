@@ -1,0 +1,15 @@
+Feature	URL
+Admin http://127.0.0.1:8000/admin
+username = root password = root
+
+Register	http://127.0.0.1:8000/users/register/
+Login	http://127.0.0.1:8000/users/login/
+Logout	http://127.0.0.1:8000/users/logout/
+Forgot Password Form	http://127.0.0.1:8000/users/forgot/
+Reset Password (Token)	http://127.0.0.1:8000/users/forgotpassword/<email_token>/
+Email Verification	http://127.0.0.1:8000/users/verify/<email_token>/
+Dashboard Home (after login)	http://127.0.0.1:8000/dashboard/home/
+Search by Item Name	http://127.0.0.1:8000/dashboard/search/<query>/
+Search by Description	http://127.0.0.1:8000/dashboard/searchdes/<query>/
+Delete a Stolen Item	http://127.0.0.1:8000/dashboard/delete/<uid>/
+Delete a Reported Item	http://127.0.0.1:8000/dashboard/deletere/<uid>/

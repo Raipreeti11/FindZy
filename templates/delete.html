@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Confirmation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .delete-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #c82333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 15px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="delete-container">
+        <h2>Are you sure you want to delete "{{ data.name }}"?</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Yes, delete</button>
+            <a href="/dashboard/home">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

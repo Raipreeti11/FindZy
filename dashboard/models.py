@@ -36,7 +36,26 @@ class StolenItem(models.Model):
     keywords = models.TextField(blank=True)  # Stores extracted keywords
     created_at = models.DateTimeField(auto_now_add=True)
 
-    
+    @staticmethod
+    def find_matching_items(query):
+        query_doc = nlp(query)
+        query_keywords = set(token.text.lower() for token in query_doc if token.pos_ in ["NOUN", "PROPN"])
+        
+        all_items = StolenItem.objects.all()
+        matched_uids = []
+
+        for item in all_items:
+            item_keywords = set(item.keywords.split(", ")) if item.keywords else set()
+            match_score = len(query_keywords & item_keywords) / len(query_keywords | item_keywords) if item_keywords else 0
+            if match_score > 0.3:
+                matched_uids.append(item.uid)
+
+        return StolenItem.objects.filter(uid__in=matched_uids) # Sort by highest match score
+
+class Match(models.Model):
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    query = models.TextField()
+
 
     def __str__(self):
         return f"{self.name} - {self.category} ({self.user.username})"
@@ -79,24 +98,7 @@ class Notification(models.Model):
 
 
 
-    @staticmethod
-    def find_matching_items(query):
-        """ Finds stolen items that match a given query based on keywords """
-        query_doc = nlp(query)
-        query_keywords = set(token.text.lower() for token in query_doc if token.pos_ in ["NOUN", "PROPN"])
-        
-        all_items = StolenItem.objects.all()
-        matched_items = []
-
-        for item in all_items:
-            item_keywords = set(item.keywords.split(", ")) if item.keywords else set()
-            match_score = len(query_keywords & item_keywords) / len(query_keywords | item_keywords) if item_keywords else 0
-
-            if match_score > 0.3:  # Threshold for similarity
-                matched_items.append((item, match_score))
-
-        return sorted(matched_items, key=lambda x: x[1], reverse=True)  # Sort by highest match score
-
+    
     
 
 

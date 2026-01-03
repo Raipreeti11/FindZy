@@ -343,7 +343,7 @@
             <div class="accordion-content">
                 <p><strong>Stolen Date:</strong> {{report.stolen_datetime}}</p>
                 <p><strong>Description:</strong> {{report.description}}</p>
-                <a href="#" class="edit-link">Edit</a>
+                <a href="/dashboard/deletere/{{report.uid}}" class="edit-link">Delete</a>
             </div>
         </div>
         {% endfor %}
@@ -363,7 +363,7 @@
             <div class="accordion-content">
                 <p><strong>Stolen Date:</strong> {{item.stolen_datetime}}</p>
                 <p><strong>Description:</strong> {{item.description}}</p>
-                <a href="#" class="edit-link">Edit</a>
+                <a href="/dashboard/delete/{{item.uid}}" class="edit-link">Delete</a>
             </div>
         </div>
         {% endfor %}
@@ -505,7 +505,11 @@
 </div>
 
 
-
+{% if message == "success" %}
+<script>
+  document.getElementById("stolen-form").reset();  // Clears the form
+</script>
+{% endif %}
 
 
 
